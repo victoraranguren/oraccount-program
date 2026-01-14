@@ -11,22 +11,22 @@ describe("oraccount-program", () => {
 
   const program = anchor.workspace.oraccountProgram as Program<OraccountProgram>;
 
-  // it("Creae Oracle Account", async () => {
-  //   const initValue = new BN(Math.random() * 100)
-  //   console.log("initValue: ", initValue);
+  it("Creae Oracle Account", async () => {
+    const initValue = new BN(Math.random() * 100)
+    console.log("initValue: ", initValue);
 
-  //   const [oraclePDA] = anchor.web3.PublicKey.findProgramAddressSync(
-  //     [Buffer.from("oracle_account"), provider.wallet.publicKey.toBuffer()],
-  //     program.programId)
+    const [oraclePDA] = anchor.web3.PublicKey.findProgramAddressSync(
+      [Buffer.from("oracle_account"), provider.wallet.publicKey.toBuffer()],
+      program.programId)
 
-  //   console.log("oraclePDA: ", oraclePDA);
+    console.log("oraclePDA: ", oraclePDA);
 
-  //   const tx = await program.methods.createOracleAccount(initValue).accounts({
-  //     oracle: oraclePDA
-  //   }).rpc()
+    const tx = await program.methods.createOracleAccount(initValue).accounts({
+      oracle: oraclePDA
+    }).rpc()
 
-  //   console.log("Your Init Account signature: ", tx);
-  // })
+    console.log("Your Init Account signature: ", tx);
+  })
 
 
 
