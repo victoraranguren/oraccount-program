@@ -1,6 +1,6 @@
 use anchor_lang::prelude::*;
 
-declare_id!("GW81XdbiNeJiWfnpmGT6fjXQv2ejGPtDBkxXfarwUFYS");
+declare_id!("BtrhqSTy1m3bZ687cZ1tPxNq2jNFhpEZXuJKaVimaFfN");
 
 #[program]
 pub mod oraccount_program {
@@ -12,6 +12,7 @@ pub mod oraccount_program {
     }
 
     pub fn create_oracle_account(ctx: Context<CreateOracleAccount>, init_value: u64) -> Result<()> {
+        ctx.accounts.oracle.authority = ctx.accounts.authority.key();
         ctx.accounts.oracle.value = init_value;
         ctx.accounts.oracle.last_updated = Clock::get()?.unix_timestamp;
         msg!("Creating new Oracle Account with init_value = {} & update_tieme = {} & Address = {}", ctx.accounts.oracle.value, ctx.accounts.oracle.last_updated, ctx.accounts.oracle.key());

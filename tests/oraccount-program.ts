@@ -12,7 +12,7 @@ describe("oraccount-program", () => {
   const program = anchor.workspace.oraccountProgram as Program<OraccountProgram>;
 
   it("Creae Oracle Account", async () => {
-    const initValue = new BN(Math.random())
+    const initValue = new BN(Math.random() * 100)
     console.log("initValue: ", initValue);
 
     const [oraclePDA] = anchor.web3.PublicKey.findProgramAddressSync(
@@ -26,5 +26,29 @@ describe("oraccount-program", () => {
     }).rpc()
 
     console.log("Your Init Account signature: ", tx);
+  })
+
+
+
+  it("Update Oracle Account", async () => {
+    const newValue = new BN(Math.random() * 100)
+    console.log("newValue: ", newValue);
+
+    const [oraclePDA] = anchor.web3.PublicKey.findProgramAddressSync(
+      [Buffer.from("oracle_account"), provider.wallet.publicKey.toBuffer()],
+      program.programId)
+
+    console.log("oraclePDA Address: ", oraclePDA);
+    let oracleAccount = await program.account.oracleAccount.fetch(oraclePDA);
+    console.log("oracleAccount value Before: ", oracleAccount.value.toNumber());
+
+    const tx = await program.methods.updateOracleValue(newValue).accounts({
+      oracle: oraclePDA
+    }).rpc()
+
+    console.log("Your Update Account signature: ", tx);
+
+    oracleAccount = await program.account.oracleAccount.fetch(oraclePDA);
+    console.log("oracleAccount value After: ", oracleAccount.value.toNumber());
   })
 });
