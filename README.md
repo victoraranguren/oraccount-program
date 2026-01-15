@@ -1,21 +1,69 @@
-# Oraccount Project
+# Oraccount
 
 ## Intro
-Oraccount es un oraculo que funciona en la red de solana el cual actualizara una account cada 10 segundos con un numero flotante.
+Oraccount is an oracle running on the Solana network that updates an account every x seconds with a floating-point number. This repo contains the Solana Program, and this other one contains the [backend](https://github.com/victoraranguren/oraccount-server) that updates the PDA via Cron and offers a REST API to read the account.
 
-## Arquitectura
+## Architecture
 
-- Solana Program: Encargado de gestionar las accounts mediante:
-  - Creacion, actualizacion y clausura de cuentas
+The Solana Program manages the PDA via the following instructions:
+- `create_oracle_account`: Account creation (PDA)
+- `update_oracle_value`: PDA update with a random number
+
+## IMPORTANT
+Although the Solana program can be executed directly from the tests.
+
+The component responsible for executing the Solana program periodically is a backend, such as the one developed for this project. Link: [https://github.com/victoraranguren/oraccount-server](https://github.com/victoraranguren/oraccount-server)
 
 ## Stack
-- Solana Program: Anchor & Typescript (for testing) 
+  - Anchor for Solana Program
+  - Typescript for testing 
 
-## Tareas de Desarrollo
-1. Solana Program:
-  - Tasks:
-    - [ ] Definir estructura de datos
-    - [ ] Creacion
-    - [ ] Actualizacion 
-    - [ ] Clausura de cuentas
+## Requirements
+- [Rust & Anchor CLI](https://solana.com/es/docs/intro/installation)
+- [Surfpool](https://docs.surfpool.run/install)
+- [Node.js](https://nodejs.org/en/download/current)
+- [PNPM (Optional)](https://pnpm.io/es/installation)
 
+## Usage
+
+By default, the project is configured to work on **localnet** using **Surfpool**.
+
+### 1. Setup and Installation
+
+Install TypeScript dependencies and ensure the Anchor environment is ready:
+
+```bash
+pnpm install
+```
+Or npm (avoid using it)
+```bash
+npm install
+```
+
+### 2. Development Cycle with Anchor
+
+To build, deploy, and test the program in your local environment:
+
+- **Build the program:**
+  ```bash
+  anchor build
+  ```
+
+- **Deploy to localnet (Surfpool):**
+
+  Start the local network with Surfpool, which runs on `http://localhost:8899` by default.
+  ```bash
+  surfpool start
+  ```
+  Ensure Surfpool is running at `http://localhost:8899`.
+  ```bash
+  anchor deploy
+  ```
+
+- **Run tests:**
+  You can run tests directly with Anchor, which will automatically build and deploy if necessary:
+  ```bash
+  anchor test
+  ```
+
+---
